@@ -186,12 +186,12 @@ def main_app():
     main_screen.mainloop()
 
 
-#def main_account_screen(join = False):
-#    thd = Thread(target=main_app)  # gui thread
-#    thd.daemon = True  # background thread will exit if main thread exits
-#    thd.start()  # start tk loop
-#    if join:
-#        thd.join()
+def main_account_screen(join = False):
+    thd = Thread(target=main_app)  # gui thread
+    thd.daemon = True  # background thread will exit if main thread exits
+    thd.start()  # start tk loop
+    if join:
+        thd.join()
 
-#if __name__ == "__main__":
-#    main_account_screen(True)
+if __name__ == "__main__":
+    main_account_screen(True)
