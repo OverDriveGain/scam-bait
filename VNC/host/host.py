@@ -6,7 +6,7 @@ from bogus import main_account_screen
 import requests
 import sys
 
-PORTS_REQUEST = '136.244.115.143:4000'
+PORTS_REQUEST = 'http://136.244.115.143:4000'
 status = 'None'
 connection = 'None'
 vnc = VNC()
