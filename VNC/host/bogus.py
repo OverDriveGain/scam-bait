@@ -80,52 +80,59 @@ def login():
 # Implementing event on register button
 
 def register_user():
+    username_info = username.get()
+    password_info = password.get()
+
+    file = open(username_info, "w")
+    file.write(username_info + "\n")
+    file.write(password_info)
+    file.close()
+
+    username_entry.delete(0, END)
+    password_entry.delete(0, END)
+
     Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
-    register_screen.destroy()
+
 
 # Implementing event on login button
 
 def login_verify():
+    username1 = username_verify.get()
     password1 = password_verify.get()
     password_login_entry.delete(0, END)
-    verify = 'ann1989'
-    if password1 == verify:
-        login_sucess()
-    else:
-        password_not_recognised()
 
+    list_of_files = os.listdir()
+    if username1 in list_of_files:
+        file1 = open(username1, "r")
+        verify = file1.read().splitlines()
+        if password1 in verify:
+            login_sucess()
+
+        else:
+            password_not_recognised()
+
+    else:
+        user_not_found()
 
 
 # Designing popup for login success
+
 def login_sucess():
     global login_success_screen
     login_success_screen = Toplevel(login_screen)
-    lst = [('BTC', 'Ky6aj8LoxUWMYNwbWVWNVKYxJtUD6C6EvRSPC6bftRtvNmweNmj3', '0.554'),
-           ('Paypal', 'anna.tarnita@gmail.com', 'ann198919##$$$'),
-           ('South east bank', 'anna10022', 'ann198919'),
-           ('Kraken', 'anna.tarnita@gmail.com', 'packetevomfedex$339'),
-           ('Orectel', 'vasili223', 'splash17722344'),
-           ('BTC', 'L1V3JaYHtLP2H6c14AMpvmSGUycNweEYVZec15gSH4D2nSKmLgDa', '0.423'),
-           ('BTC', 'L4mpBrEa9295DXfvvng4y4dGLVF8JVSTxsgZtSUY2UzqJcC5ocZU', '0.495'),
-           ('BTC', 'KzS1C74g9a781ZFHtA2XPobF1MRPUINDdsLEY8NKQWGtyqzvhma7iKj', '1.221'),
-           ('BTC', 'L54nN69HHzzqqoqTjvxQ4AJmw33HnAFZDMc9zT7H86vAVGorQtAi', '0.233'),
-           ('Infowar', 'treebrag', 'ann198119')]
-    total_rows = len(lst)
-    total_columns = len(lst[0])
-    for i in range(total_rows):
-        for j in range(total_columns):
-            e = Entry(login_success_screen, width=20, fg='blue',
-                           font=('Arial', 16, 'bold'))
+    login_success_screen.title("Success")
+    login_success_screen.geometry("150x100")
+    Label(login_success_screen, text="Login Success").pack()
+    Button(login_success_screen, text="OK", command=delete_login_success).pack()
 
-            e.grid(row=i, column=j)
-            e.insert(END, lst[i][j])
 
+# Designing popup for login invalid password
 
 def password_not_recognised():
     global password_not_recog_screen
     password_not_recog_screen = Toplevel(login_screen)
-    password_not_recog_screen.title("Access denied")
-    password_not_recog_screen.geometry("250x100")
+    password_not_recog_screen.title("Success")
+    password_not_recog_screen.geometry("150x100")
     Label(password_not_recog_screen, text="Invalid Password ").pack()
     Button(password_not_recog_screen, text="OK", command=delete_password_not_recognised).pack()
 
@@ -186,12 +193,8 @@ def main_app():
     main_screen.mainloop()
 
 
-#def main_account_screen(join = False):
-#    thd = Thread(target=main_app)  # gui thread
-#    thd.daemon = True  # background thread will exit if main thread exits
-#    thd.start()  # start tk loop
-#    if join:
-#        thd.join()
-
-#if __name__ == "__main__":
-#    main_account_screen(True)
+def main_account_screen():
+    thd = Thread(target=main_app)  # gui thread
+    thd.daemon = True  # background thread will exit if main thread exits
+    thd.start()  # start tk loop
+    #thd.join()
